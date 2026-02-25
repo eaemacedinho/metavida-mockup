@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaVida — Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde: #1e3d2f;
+    --verde-md: #2e5c45;
+    --verde-lt: #4a8c6a;
+    --sage: #9ab89e;
+    --cream: #f7efe3;
+    --cream-dk: #ede3d3;
+    --gold: #c8a96e;
+    --gold-lt: #e8cfa0;
+    --charcoal: #1c1c1c;
+    --muted: #7a7a72;
+    --white: #ffffff;
+    --red-soft: #e07a6e;
+    --blue-soft: #7ab0c8;
+  }
+
+  body {
+    background: #f0ebe2;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(158,184,158,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 100%, rgba(200,169,110,0.12) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* — Header — */
+  .studio-header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .studio-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--verde-md);
+    margin-bottom: 6px;
+  }
+  .studio-header .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: var(--verde);
+    letter-spacing: -.01em;
+    line-height: 1;
+  }
+  .studio-header .brand em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .studio-header p {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    margin-top: 8px;
+  }
+
+  /* — Screen selector — */
+  .screen-nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 6px;
+    margin-bottom: 36px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(200,169,110,0.25);
+    border-radius: 50px;
+    padding: 5px;
+  }
+  .screen-nav button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--muted);
+    background: none;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all .25s ease;
+    white-space: nowrap;
+  }
+  .screen-nav button.active {
+    background: var(--verde);
+    color: var(--cream);
+  }
+
+  /* — Phone frame — */
+  .phone-stage {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .phone {
+    width: 375px;
+    height: 812px;
+    background: var(--charcoal);
+    border-radius: 52px;
+    padding: 14px;
+    box-shadow: 
+      0 0 0 1px rgba(255,255,255,.08),
+      0 40px 80px rgba(30,61,47,.25),
+      0 12px 30px rgba(0,0,0,.18),
+      inset 0 0 0 1px rgba(255,255,255,.04);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .phone-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+    background: var(--cream);
+  }
+
+  /* notch */
+  .notch {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 34px;
+    background: var(--charcoal);
+    border-radius: 0 0 20px 20px;
+    z-index: 20;
+  }
+
+  /* — Screen content — */
+  .screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+  .screen.active { display: block; }
+
+  /* === SCREEN 1: HOME / DASHBOARD === */
+  .s-home {
+    background: var(--cream);
+  }
+
+  .home-hero {
+    background: linear-gradient(160deg, var(--verde) 0%, var(--verde-md) 55%, #3a6b52 100%);
+    padding: 52px 24px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(200,169,110,.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(154,184,158,.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .home-greeting {
+    font-size: 12px;
+    color: var(--sage);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .home-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .home-name em { font-style: italic; color: var(--gold-lt); }
+  .home-date {
+    font-size: 11px;
+    color: rgba(255,255,255,.5);
+    letter-spacing: .05em;
+  }
+
+  .score-ring {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 8px;
+  }
+  .ring-wrap {
+    position: relative;
+    width: 110px; height: 110px;
+  }
+  .ring-wrap svg {
+    width: 110px; height: 110px;
+    transform: rotate(-90deg);
+  }
+  .ring-wrap circle {
+    fill: none;
+    stroke-width: 7;
+    stroke-linecap: round;
+  }
+  .ring-track { stroke: rgba(255,255,255,.1); }
+  .ring-fill { 
+    stroke: var(--gold); 
+    stroke-dasharray: 283;
+    stroke-dashoffset: 57;
+    filter: drop-shadow(0 0 6px rgba(200,169,110,.6));
+  }
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring-score {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1;
+  }
+  .ring-label {
+    font-size: 9px;
+    color: var(--sage);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .mini-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 0 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .mini-stat {
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .mini-stat .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1;
+  }
+  .mini-stat .unit {
+    font-size: 9px;
+    color: var(--gold-lt);
+    letter-spacing: .05em;
+  }
+  .mini-stat .lbl {
+    font-size: 9px;
+    color: rgba(255,255,255,.5);
+    margin-top: 4px;
+    letter-spacing: .04em;
+  }
+
+  .home-section {
+    padding: 20px 20px 0;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .today-goals {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .goal-item {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  .goal-icon {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .gi-green { background: rgba(30,61,47,.08); }
+  .gi-gold { background: rgba(200,169,110,.12); }
+  .gi-blue { background: rgba(122,176,200,.12); }
+  .goal-info { flex: 1; }
+  .goal-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+  .goal-bar {
+    height: 5px;
+    background: var(--cream-dk);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .goal-fill {
+    height: 100%;
+    border-radius: 10px;
+  }
+  .gf-green { background: linear-gradient(90deg, var(--verde-lt), var(--sage)); }
+  .gf-gold { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); }
+  .gf-blue { background: linear-gradient(90deg, var(--blue-soft), #a8d0e0); }
+  .goal-pct {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--verde-md);
+  }
+
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .qa-btn {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 14px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    cursor: pointer;
+  }
+  .qa-icon {
+    font-size: 20px;
+  }
+  .qa-lbl {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: .03em;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* insight card */
+  .insight-card {
+    background: linear-gradient(135deg, var(--verde) 0%, #2d5543 100%);
+    border-radius: 20px;
+    padding: 18px 20px;
+    margin: 4px 0 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '✦';
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 22px;
+    color: rgba(200,169,110,.35);
+  }
+  .insight-tag {
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .insight-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  /* bottom nav */
+  .bottom-nav {
+    position: sticky;
+    bottom: 0;
+    background: rgba(247,239,227,.92);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(200,169,110,.15);
+    padding: 12px 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    z-index: 10;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .nav-icon { font-size: 20px; }
+  .nav-lbl { font-size: 9px; color: var(--muted); letter-spacing: .03em; }
+  .nav-item.active .nav-icon { filter: none; }
+  .nav-item.active .nav-lbl { color: var(--verde); font-weight: 600; }
+  .nav-dot {
+    width: 4px; height: 4px;
+    background: var(--verde);
+    border-radius: 50%;
+    margin-top: -2px;
+  }
+
+  /* === SCREEN 2: DIÁRIO ALIMENTAR === */
+  .s-diary {
+    background: var(--cream);
+  }
+  .diary-header {
+    background: var(--cream);
+    padding: 52px 24px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid rgba(200,169,110,.15);
+  }
+  .diary-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--verde);
+    margin-bottom: 14px;
+  }
+  .macro-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .macro-pill {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  .macro-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--charcoal);
+    line-height: 1;
+  }
+  .macro-name {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .macro-bar {
+    height: 3px;
+    border-radius: 4px;
+    margin-top: 6px;
+  }
+  .mb-kcal { background: var(--gold); }
+  .mb-prot { background: #7ab0c8; }
+  .mb-carb { background: #e8ad7a; }
+  .mb-fat { background: var(--sage); }
+
+  .meal-section {
+    padding: 16px 20px;
+  }
+  .meal-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .meal-label span:first-child {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--verde-md);
+  }
+  .meal-kcal {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .food-item {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  .food-emoji { font-size: 26px; }
+  .food-info { flex: 1; }
+  .food-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 3px;
+  }
+  .food-detail {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .food-kcal {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--verde-md);
+  }
+
+  .add-food-btn {
+    background: linear-gradient(135deg, var(--verde-lt), var(--verde-md));
+    color: var(--white);
+    border: none;
+    border-radius: 16px;
+    padding: 14px 20px;
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .ai-suggestion {
+    background: linear-gradient(120deg, rgba(200,169,110,.12), rgba(200,169,110,.06));
+    border: 1px solid rgba(200,169,110,.3);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin: 0 20px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .ai-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .ai-text {
+    font-size: 12px;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+  .ai-title {
+    font-weight: 600;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 3px;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  /* === SCREEN 3: EVOLUÇÃO === */
+  .s-metrics {
+    background: var(--cream);
+  }
+  .metrics-header {
+    background: linear-gradient(170deg, var(--verde) 0%, #2a5040 100%);
+    padding: 52px 24px 30px;
+  }
+  .metrics-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .metrics-header p {
+    font-size: 12px;
+    color: rgba(255,255,255,.5);
+  }
+
+  .metrics-tabs {
+    display: flex;
+    gap: 6px;
+    margin-top: 20px;
+  }
+  .mt-tab {
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: .04em;
+    color: rgba(255,255,255,.6);
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.1);
+  }
+  .mt-tab.active {
+    background: var(--gold);
+    color: var(--verde);
+    font-weight: 600;
+    border-color: var(--gold);
+  }
+
+  .weight-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 24px 24px 0;
+  }
+  .weight-current {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--verde);
+    line-height: 1;
+  }
+  .weight-unit {
+    font-size: 20px;
+    color: var(--verde-lt);
+    margin-bottom: 10px;
+  }
+  .weight-change {
+    text-align: right;
+  }
+  .wc-delta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--verde-lt);
+  }
+  .wc-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Chart area — purely decorative SVG */
+  .chart-area {
+    padding: 16px 20px 0;
+  }
+  .chart-svg-wrap {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  }
+  .chart-svg-wrap svg { width: 100%; overflow: visible; }
+
+  .metric-cards {
+    padding: 16px 20px 100px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .metric-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  }
+  .mc-icon { font-size: 22px; margin-bottom: 8px; }
+  .mc-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1;
+  }
+  .mc-unit { font-size: 12px; color: var(--muted); }
+  .mc-name {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-top: 6px;
+  }
+  .mc-trend {
+    font-size: 11px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .trend-up { color: var(--red-soft); }
+  .trend-dn { color: var(--verde-lt); }
+
+  /* === SCREEN 4: COMUNIDADE === */
+  .s-community {
+    background: var(--cream);
+  }
+  .comm-header {
+    padding: 52px 24px 16px;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(200,169,110,.15);
+  }
+  .comm-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--verde);
+    margin-bottom: 12px;
+  }
+
+  .post-card {
+    background: var(--white);
+    border-radius: 20px;
+    margin: 12px 20px 0;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  }
+  .post-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: linear-gradient(135deg, var(--verde-lt), var(--sage));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+  .post-body { padding: 16px; }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .post-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--sage));
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .post-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+  .post-time {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .badge-pro {
+    font-size: 9px;
+    background: var(--gold);
+    color: var(--verde);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .post-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--charcoal);
+    margin-bottom: 12px;
+  }
+  .post-reactions {
+    display: flex;
+    gap: 16px;
+    padding-top: 10px;
+    border-top: 1px solid var(--cream-dk);
+  }
+  .reaction {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* === SCREEN 5: PERFIL / PLANOS === */
+  .s-profile {
+    background: var(--cream);
+  }
+  .profile-hero {
+    background: linear-gradient(150deg, var(--verde) 0%, #2d5542 60%, #3d6e58 100%);
+    padding: 52px 24px 30px;
+    text-align: center;
+  }
+  .profile-avatar {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    border: 3px solid rgba(255,255,255,.2);
+  }
+  .profile-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .profile-plan {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200,169,110,.2);
+    border: 1px solid rgba(200,169,110,.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    color: var(--gold-lt);
+    letter-spacing: .06em;
+  }
+
+  .plan-section {
+    padding: 20px 20px;
+  }
+  .plan-card {
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-basic {
+    background: var(--white);
+    border: 2px solid var(--cream-dk);
+  }
+  .plan-premium {
+    background: var(--white);
+    border: 2px solid var(--verde-lt);
+  }
+  .plan-vip {
+    background: linear-gradient(135deg, var(--verde) 0%, #2a5040 100%);
+    border: 2px solid var(--gold);
+  }
+  .plan-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .pb-current { background: var(--verde-lt); color: var(--white); }
+  .pb-popular { background: var(--gold); color: var(--verde); }
+  .plan-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .plan-vip .plan-name { color: var(--gold-lt); }
+  .plan-basic .plan-name,
+  .plan-premium .plan-name { color: var(--charcoal); }
+
+  .plan-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .plan-basic .plan-price { color: var(--charcoal); }
+  .plan-premium .plan-price { color: var(--verde); }
+  .plan-vip .plan-price { color: var(--white); }
+  .plan-price sup {
+    font-size: 16px;
+    vertical-align: top;
+    margin-top: 6px;
+    display: inline-block;
+  }
+  .plan-price sub {
+    font-size: 14px;
+    color: var(--muted);
+    vertical-align: baseline;
+  }
+  .plan-vip .plan-price sub { color: rgba(255,255,255,.5); }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .plan-features li {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plan-basic .plan-features li,
+  .plan-premium .plan-features li { color: var(--charcoal); }
+  .plan-vip .plan-features li { color: rgba(255,255,255,.85); }
+  .pf-check { font-size: 13px; }
+
+  .plan-cta {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    margin-top: 16px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .plan-basic .plan-cta { background: var(--cream-dk); color: var(--muted); }
+  .plan-premium .plan-cta { background: var(--verde); color: var(--white); }
+  .plan-vip .plan-cta { background: var(--gold); color: var(--verde); }
+
+  /* Disclaimer */
+  .disclaimer {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    padding: 0 30px 8px;
+    line-height: 1.6;
+    letter-spacing: .02em;
+  }
+
+  /* Animations */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .screen.active > * {
+    animation: fadeSlideUp .4s ease both;
+  }
+  .screen.active > *:nth-child(1) { animation-delay: 0s; }
+  .screen.active > *:nth-child(2) { animation-delay: .05s; }
+  .screen.active > *:nth-child(3) { animation-delay: .1s; }
+  .screen.active > *:nth-child(4) { animation-delay: .15s; }
+  .screen.active > *:nth-child(5) { animation-delay: .2s; }
+
+  /* label below phones */
+  .phone-label {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="studio-header">
+  <h1>Mockup de Produto</h1>
+  <div class="brand">Meta<em>Vida</em></div>
+  <p>Plataforma de Saúde Metabólica · Visualização de Interface</p>
+</div>
+
+<div class="screen-nav">
+  <button class="active" onclick="switchScreen(0)">Início</button>
+  <button onclick="switchScreen(1)">Diário</button>
+  <button onclick="switchScreen(2)">Evolução</button>
+  <button onclick="switchScreen(3)">Comunidade</button>
+  <button onclick="switchScreen(4)">Perfil</button>
+</div>
+
+<div class="phone-stage">
+  <div>
+    <div class="phone">
+      <div class="phone-inner">
+        <div class="notch"></div>
+
+        <!-- SCREEN 1: HOME -->
+        <div class="screen s-home active" id="s0">
+          <div class="home-hero">
+            <div class="home-greeting">Boa tarde</div>
+            <div class="home-name">Ana <em>Beatriz</em></div>
+            <div class="home-date">Terça, 24 de fevereiro · Semana 8</div>
+            <div class="score-ring">
+              <div class="ring-wrap">
+                <svg viewBox="0 0 110 110">
+                  <circle class="ring-track" cx="55" cy="55" r="45"/>
+                  <circle class="ring-fill" cx="55" cy="55" r="45"/>
+                </svg>
+                <div class="ring-center">
+                  <div class="ring-score">8.3</div>
+                  <div class="ring-label">MetaScore</div>
+                </div>
+              </div>
+            </div>
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <div class="val">67<span class="unit">kg</span></div>
+                <div class="lbl">Peso hoje</div>
+              </div>
+              <div class="mini-stat">
+                <div class="val">−3.2<span class="unit">kg</span></div>
+                <div class="lbl">No mês</div>
+              </div>
+              <div class="mini-stat">
+                <div class="val">81<span class="unit">%</span></div>
+                <div class="lbl">Metas</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-section" style="padding-top:20px">
+            <div class="section-title">Objetivos de Hoje</div>
+            <div class="today-goals">
+              <div class="goal-item">
+                <div class="goal-icon gi-green">🥗</div>
+                <div class="goal-info">
+                  <div class="goal-name">Proteína — 1.8g/kg</div>
+                  <div class="goal-bar"><div class="goal-fill gf-green" style="width:72%"></div></div>
+                </div>
+                <div class="goal-pct">72%</div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-icon gi-blue">💧</div>
+                <div class="goal-info">
+                  <div class="goal-name">Hidratação — 2,5L</div>
+                  <div class="goal-bar"><div class="goal-fill gf-blue" style="width:60%"></div></div>
+                </div>
+                <div class="goal-pct">60%</div>
+              </div>
+              <div class="goal-item">
+                <div class="goal-icon gi-gold">🏃‍♀️</div>
+                <div class="goal-info">
+                  <div class="goal-name">Movimento — 7.000 passos</div>
+                  <div class="goal-bar"><div class="goal-fill gf-gold" style="width:89%"></div></div>
+                </div>
+                <div class="goal-pct">89%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-section" style="padding-top:18px">
+            <div class="section-title">Acesso Rápido</div>
+            <div class="quick-actions">
+              <div class="qa-btn"><div class="qa-icon">📸</div><div class="qa-lbl">Foto da refeição</div></div>
+              <div class="qa-btn"><div class="qa-icon">⚖️</div><div class="qa-lbl">Registrar peso</div></div>
+              <div class="qa-btn"><div class="qa-icon">💬</div><div class="qa-lbl">Chat nutrição</div></div>
+              <div class="qa-btn"><div class="qa-icon">📖</div><div class="qa-lbl">Conteúdo</div></div>
+            </div>
+          </div>
+
+          <div class="home-section" style="padding-top:18px">
+            <div class="insight-card">
+              <div class="insight-tag">✦ Insight da IA</div>
+              <div class="insight-text">"Você atingiu sua meta de proteína em 5 dos últimos 7 dias. Continue assim — isso acelera sua resposta ao tratamento."</div>
+            </div>
+          </div>
+
+          <div class="disclaimer">
+            Este app não prescreve medicamentos nem doses.<br>Sempre consulte seu médico responsável.
+          </div>
+
+          <div class="bottom-nav">
+            <div class="nav-item active"><div class="nav-icon">🏠</div><div class="nav-lbl">Início</div><div class="nav-dot"></div></div>
+            <div class="nav-item"><div class="nav-icon">🍽️</div><div class="nav-lbl">Diário</div></div>
+            <div class="nav-item"><div class="nav-icon">📈</div><div class="nav-lbl">Evolução</div></div>
+            <div class="nav-item"><div class="nav-icon">👥</div><div class="nav-lbl">Comunidade</div></div>
+            <div class="nav-item"><div class="nav-icon">👤</div><div class="nav-lbl">Perfil</div></div>
+          </div>
+        </div>
+
+        <!-- SCREEN 2: DIÁRIO -->
+        <div class="screen s-diary" id="s1">
+          <div class="diary-header">
+            <h2>Diário Alimentar</h2>
+            <div class="macro-strip">
+              <div class="macro-pill">
+                <div class="macro-val">1.480</div>
+                <div class="macro-name">kcal</div>
+                <div class="macro-bar mb-kcal" style="width:72%"></div>
+              </div>
+              <div class="macro-pill">
+                <div class="macro-val">98g</div>
+                <div class="macro-name">Proteína</div>
+                <div class="macro-bar mb-prot" style="width:65%"></div>
+              </div>
+              <div class="macro-pill">
+                <div class="macro-val">142g</div>
+                <div class="macro-name">Carboidr.</div>
+                <div class="macro-bar mb-carb" style="width:55%"></div>
+              </div>
+              <div class="macro-pill">
+                <div class="macro-val">48g</div>
+                <div class="macro-name">Gordura</div>
+                <div class="macro-bar mb-fat" style="width:78%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meal-section">
+            <div class="meal-label"><span>☀️ Café da manhã</span><span class="meal-kcal">380 kcal</span></div>
+            <div class="food-item">
+              <div class="food-emoji">🥚</div>
+              <div class="food-info">
+                <div class="food-name">Ovos mexidos com queijo</div>
+                <div class="food-detail">2 ovos · 30g queijo cottage</div>
+              </div>
+              <div class="food-kcal">210</div>
+            </div>
+            <div class="food-item">
+              <div class="food-emoji">🫐</div>
+              <div class="food-info">
+                <div class="food-name">Mix de frutas vermelhas</div>
+                <div class="food-detail">100g · Antioxidantes</div>
+              </div>
+              <div class="food-kcal">65</div>
+            </div>
+          </div>
+
+          <div class="meal-section">
+            <div class="meal-label"><span>🌤️ Almoço</span><span class="meal-kcal">620 kcal</span></div>
+            <div class="food-item">
+              <div class="food-emoji">🥗</div>
+              <div class="food-info">
+                <div class="food-name">Bowl de frango grelhado</div>
+                <div class="food-detail">150g frango · quinoa · legumes</div>
+              </div>
+              <div class="food-kcal">485</div>
+            </div>
+            <div class="add-food-btn">
+              <span>＋</span> Fotografar refeição com IA
+            </div>
+          </div>
+
+          <div class="ai-suggestion">
+            <div class="ai-icon">✨</div>
+            <div class="ai-text">
+              <span class="ai-title">Sugestão da IA</span>
+              Você está com proteína abaixo do ideal para hoje. Considere incluir um iogurte grego no lanche da tarde para atingir sua meta de 1,8g/kg.
+            </div>
+          </div>
+
+          <div class="meal-section" style="padding-bottom:20px">
+            <div class="meal-label"><span>🌙 Jantar</span><span class="meal-kcal">não registrado</span></div>
+            <div class="add-food-btn" style="background: rgba(30,61,47,.08); color: var(--verde-md);">
+              <span>＋</span> Adicionar jantar
+            </div>
+          </div>
+
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon">🏠</div><div class="nav-lbl">Início</div></div>
+            <div class="nav-item active"><div class="nav-icon">🍽️</div><div class="nav-lbl">Diário</div><div class="nav-dot"></div></div>
+            <div class="nav-item"><div class="nav-icon">📈</div><div class="nav-lbl">Evolução</div></div>
+            <div class="nav-item"><div class="nav-icon">👥</div><div class="nav-lbl">Comunidade</div></div>
+            <div class="nav-item"><div class="nav-icon">👤</div><div class="nav-lbl">Perfil</div></div>
+          </div>
+        </div>
+
+        <!-- SCREEN 3: EVOLUÇÃO -->
+        <div class="screen s-metrics" id="s2">
+          <div class="metrics-header">
+            <h2>Minha Evolução</h2>
+            <p>Semana 8 de acompanhamento</p>
+            <div class="metrics-tabs">
+              <div class="mt-tab active">Peso</div>
+              <div class="mt-tab">Circunf.</div>
+              <div class="mt-tab">Energia</div>
+              <div class="mt-tab">Sono</div>
+            </div>
+          </div>
+
+          <div class="weight-hero">
+            <div>
+              <span class="weight-current">67</span>
+              <span class="weight-unit">kg</span>
+            </div>
+            <div class="weight-change">
+              <div class="wc-delta">−3,2 kg</div>
+              <div class="wc-label">desde o início</div>
+              <div style="font-size:11px;color:var(--verde-lt);margin-top:4px">▼ 0,4 kg esta semana</div>
+            </div>
+          </div>
+
+          <div class="chart-area">
+            <div class="chart-svg-wrap">
+              <svg viewBox="0 0 290 100" height="100">
+                <!-- grid lines -->
+                <line x1="0" y1="25" x2="290" y2="25" stroke="#f0ebe2" stroke-width="1"/>
+                <line x1="0" y1="50" x2="290" y2="50" stroke="#f0ebe2" stroke-width="1"/>
+                <line x1="0" y1="75" x2="290" y2="75" stroke="#f0ebe2" stroke-width="1"/>
+                <!-- area fill -->
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#4a8c6a" stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color="#4a8c6a" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M10,72 C30,70 50,68 70,65 C90,62 110,60 130,58 C150,56 170,55 190,53 C210,51 230,50 250,47 C265,45 275,44 280,43 L280,100 L10,100 Z" fill="url(#chartGrad)"/>
+                <!-- line -->
+                <path d="M10,72 C30,70 50,68 70,65 C90,62 110,60 130,58 C150,56 170,55 190,53 C210,51 230,50 250,47 C265,45 275,44 280,43" fill="none" stroke="#4a8c6a" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- dots -->
+                <circle cx="10" cy="72" r="3.5" fill="#4a8c6a"/>
+                <circle cx="70" cy="65" r="3.5" fill="#4a8c6a"/>
+                <circle cx="130" cy="58" r="3.5" fill="#4a8c6a"/>
+                <circle cx="190" cy="53" r="3.5" fill="#4a8c6a"/>
+                <circle cx="250" cy="47" r="3.5" fill="#4a8c6a"/>
+                <circle cx="280" cy="43" r="5" fill="white" stroke="#c8a96e" stroke-width="2.5"/>
+                <!-- labels -->
+                <text x="10" y="97" font-size="8" fill="#7a7a72" font-family="DM Sans, sans-serif">Jan</text>
+                <text x="68" y="97" font-size="8" fill="#7a7a72" font-family="DM Sans, sans-serif">Jan 20</text>
+                <text x="126" y="97" font-size="8" fill="#7a7a72" font-family="DM Sans, sans-serif">Fev 3</text>
+                <text x="186" y="97" font-size="8" fill="#7a7a72" font-family="DM Sans, sans-serif">Fev 10</text>
+                <text x="246" y="97" font-size="8" fill="#7a7a72" font-family="DM Sans, sans-serif">Fev 17</text>
+                <text x="267" y="40" font-size="8" fill="#c8a96e" font-family="DM Sans, sans-serif">67 kg</text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="metric-cards">
+            <div class="metric-card">
+              <div class="mc-icon">📏</div>
+              <div><span class="mc-val">84</span><span class="mc-unit"> cm</span></div>
+              <div class="mc-name">Cintura</div>
+              <div class="mc-trend trend-dn">▼ 4,5 cm</div>
+            </div>
+            <div class="metric-card">
+              <div class="mc-icon">⚡</div>
+              <div><span class="mc-val">7.8</span><span class="mc-unit">/10</span></div>
+              <div class="mc-name">Energia</div>
+              <div class="mc-trend trend-dn" style="color:var(--verde-lt)">▲ +2,1 pts</div>
+            </div>
+            <div class="metric-card">
+              <div class="mc-icon">😴</div>
+              <div><span class="mc-val">7h12</span></div>
+              <div class="mc-name">Sono médio</div>
+              <div class="mc-trend trend-dn" style="color:var(--verde-lt)">▲ +43 min</div>
+            </div>
+            <div class="metric-card">
+              <div class="mc-icon">🩸</div>
+              <div><span class="mc-val">94</span><span class="mc-unit"> mg/dL</span></div>
+              <div class="mc-name">Glicemia</div>
+              <div class="mc-trend trend-dn" style="color:var(--verde-lt)">▼ 12 pts</div>
+            </div>
+          </div>
+
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon">🏠</div><div class="nav-lbl">Início</div></div>
+            <div class="nav-item"><div class="nav-icon">🍽️</div><div class="nav-lbl">Diário</div></div>
+            <div class="nav-item active"><div class="nav-icon">📈</div><div class="nav-lbl">Evolução</div><div class="nav-dot"></div></div>
+            <div class="nav-item"><div class="nav-icon">👥</div><div class="nav-lbl">Comunidade</div></div>
+            <div class="nav-item"><div class="nav-icon">👤</div><div class="nav-lbl">Perfil</div></div>
+          </div>
+        </div>
+
+        <!-- SCREEN 4: COMUNIDADE -->
+        <div class="screen s-community" id="s3">
+          <div class="comm-header">
+            <h2>Comunidade</h2>
+            <div class="metrics-tabs" style="gap:6px;display:flex">
+              <div class="mt-tab active" style="background:var(--verde);color:var(--white);border-color:var(--verde)">Feed</div>
+              <div class="mt-tab">Grupos</div>
+              <div class="mt-tab">Conteúdo</div>
+            </div>
+          </div>
+
+          <div class="post-card">
+            <div class="post-img">🥑</div>
+            <div class="post-body">
+              <div class="post-meta">
+                <div class="post-avatar">👩‍⚕️</div>
+                <div>
+                  <div class="post-author">Dra. Camila Torres <span class="badge-pro">PRO</span></div>
+                  <div class="post-time">Nutricionista · há 2h</div>
+                </div>
+              </div>
+              <div class="post-text">O abacate é um aliado poderoso no tratamento metabólico: gorduras saudáveis que aumentam saciedade e estabilizam a glicemia. Dica: combine com proteína para resultados ainda melhores!</div>
+              <div class="post-reactions">
+                <div class="reaction">❤️ 48</div>
+                <div class="reaction">💬 12 comentários</div>
+                <div class="reaction">🔖 Salvar</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card">
+            <div class="post-body" style="padding:16px">
+              <div class="post-meta">
+                <div class="post-avatar" style="background:linear-gradient(135deg,#9ab89e,#7ab0c8)">😊</div>
+                <div>
+                  <div class="post-author">Fernanda M.</div>
+                  <div class="post-time">Membro · Semana 12 · há 5h</div>
+                </div>
+              </div>
+              <div class="post-text">Minha primeira semana sem sentir aquela fome extrema! Combinando o acompanhamento do app com a orientação da minha nutricionista, está funcionando demais. Menos 4kg em 3 semanas 🙌</div>
+              <div class="post-reactions">
+                <div class="reaction">❤️ 127</div>
+                <div class="reaction">💬 31</div>
+                <div class="reaction">🔖 Salvar</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:80px"></div>
+
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon">🏠</div><div class="nav-lbl">Início</div></div>
+            <div class="nav-item"><div class="nav-icon">🍽️</div><div class="nav-lbl">Diário</div></div>
+            <div class="nav-item"><div class="nav-icon">📈</div><div class="nav-lbl">Evolução</div></div>
+            <div class="nav-item active"><div class="nav-icon">👥</div><div class="nav-lbl">Comunidade</div><div class="nav-dot"></div></div>
+            <div class="nav-item"><div class="nav-icon">👤</div><div class="nav-lbl">Perfil</div></div>
+          </div>
+        </div>
+
+        <!-- SCREEN 5: PERFIL / PLANOS -->
+        <div class="screen s-profile" id="s4">
+          <div class="profile-hero">
+            <div class="profile-avatar">👩</div>
+            <div class="profile-name">Ana Beatriz</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.5);margin:6px 0 14px">ana.beatriz@email.com · Desde Jan 2025</div>
+            <div class="profile-plan">✦ Plano Basic atual</div>
+          </div>
+
+          <div class="plan-section">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--verde);margin-bottom:16px;font-weight:400">
+              Escolha seu plano
+            </div>
+
+            <div class="plan-card plan-basic">
+              <span class="plan-badge pb-current">Atual</span>
+              <div class="plan-name">Basic</div>
+              <div class="plan-price"><sup>R$</sup>49<sub>/mês</sub></div>
+              <ul class="plan-features">
+                <li><span class="pf-check">✓</span> Diário alimentar com IA</li>
+                <li><span class="pf-check">✓</span> Tracking de métricas</li>
+                <li><span class="pf-check">✓</span> Conteúdo semanal curado</li>
+                <li style="color:var(--muted)"><span>✗</span> Chat com profissional</li>
+              </ul>
+              <button class="plan-cta">Plano atual</button>
+            </div>
+
+            <div class="plan-card plan-premium">
+              <span class="plan-badge pb-popular">Popular</span>
+              <div class="plan-name">Premium</div>
+              <div class="plan-price"><sup>R$</sup>99<sub>/mês</sub></div>
+              <ul class="plan-features">
+                <li><span class="pf-check">✓</span> Tudo do Basic</li>
+                <li><span class="pf-check">✓</span> Chat com nutricionista</li>
+                <li><span class="pf-check">✓</span> Comunidade exclusiva</li>
+                <li><span class="pf-check">✓</span> Relatórios avançados</li>
+              </ul>
+              <button class="plan-cta">Fazer upgrade</button>
+            </div>
+
+            <div class="plan-card plan-vip">
+              <div class="plan-name">VIP</div>
+              <div class="plan-price" style="color:var(--white)"><sup style="color:rgba(255,255,255,.7)">R$</sup>149<sub style="color:rgba(255,255,255,.45)">/mês</sub></div>
+              <ul class="plan-features">
+                <li><span class="pf-check">✓</span> Tudo do Premium</li>
+                <li><span class="pf-check">✓</span> Consultas 1:1 mensais</li>
+                <li><span class="pf-check">✓</span> Personal trainer online</li>
+                <li><span class="pf-check">✓</span> Prioridade de resposta</li>
+              </ul>
+              <button class="plan-cta">Assinar VIP</button>
+            </div>
+          </div>
+
+          <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon">🏠</div><div class="nav-lbl">Início</div></div>
+            <div class="nav-item"><div class="nav-icon">🍽️</div><div class="nav-lbl">Diário</div></div>
+            <div class="nav-item"><div class="nav-icon">📈</div><div class="nav-lbl">Evolução</div></div>
+            <div class="nav-item"><div class="nav-icon">👥</div><div class="nav-lbl">Comunidade</div></div>
+            <div class="nav-item active"><div class="nav-icon">👤</div><div class="nav-lbl">Perfil</div><div class="nav-dot"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="phone-label">clique nas abas para navegar entre telas</div>
+  </div>
+</div>
+
+<script>
+  function switchScreen(index) {
+    document.querySelectorAll('.screen').forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.screen-nav button').forEach((b, i) => {
+      b.classList.toggle('active', i === index);
+    });
+  }
+</script>
+</body>
+</html>
